@@ -1,0 +1,23 @@
+.top-tool{
+    width: 1315px;
+    height: 50px;
+    /*border: solid 1px;*/
+}
+.sms-rec-div{
+    width: 1315px;
+    height: 800px;
+    /*border: solid 1px;*/
+}
+.search-form, .search-form-item{
+    display: inline-block;
+}
+.search-form{
+    position: relative;
+    left: 280px;
+}
+.rs-checkbox{
+    bottom: 5px;
+}
+.layui-table, .layui-table-view{
+    margin: 0;
+}

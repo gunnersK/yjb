@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yjb.mapper.YjbContactMapper" >
+  <resultMap id="BaseResultMap" type="com.yjb.pojo.YjbContact" >
+    <id column="ctc_id" property="ctcId" jdbcType="BIGINT" />
+    <result column="ctc_name" property="ctcName" jdbcType="VARCHAR" />
+    <result column="ctc_gender" property="ctcGender" jdbcType="VARCHAR" />
+    <result column="ctc_email" property="ctcEmail" jdbcType="VARCHAR" />
+    <result column="ctc_phone" property="ctcPhone" jdbcType="VARCHAR" />
+    <result column="ctc_tel" property="ctcTel" jdbcType="VARCHAR" />
+    <result column="ctc_group" property="ctcGroup" jdbcType="INTEGER" />
+    <result column="ctc_job" property="ctcJob" jdbcType="VARCHAR" />
+    <result column="com_addr" property="comAddr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ctc_id, ctc_name, ctc_gender, ctc_email, ctc_phone, ctc_tel, ctc_group, ctc_job, 
+    com_addr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yjb.pojo.YjbContactExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yjb_contact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from yjb_contact
+    where ctc_id = #{ctcId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from yjb_contact
+    where ctc_id = #{ctcId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yjb.pojo.YjbContactExample" >
+    delete from yjb_contact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yjb.pojo.YjbContact" >
+    insert into yjb_contact (ctc_id, ctc_name, ctc_gender, 
+      ctc_email, ctc_phone, ctc_tel, 
+      ctc_group, ctc_job, com_addr
+      )
+    values (#{ctcId,jdbcType=BIGINT}, #{ctcName,jdbcType=VARCHAR}, #{ctcGender,jdbcType=VARCHAR}, 
+      #{ctcEmail,jdbcType=VARCHAR}, #{ctcPhone,jdbcType=VARCHAR}, #{ctcTel,jdbcType=VARCHAR}, 
+      #{ctcGroup,jdbcType=INTEGER}, #{ctcJob,jdbcType=VARCHAR}, #{comAddr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjb.pojo.YjbContact" >
+    insert into yjb_contact
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ctcId != null" >
+        ctc_id,
+      </if>
+      <if test="ctcName != null" >
+        ctc_name,
+      </if>
+      <if test="ctcGender != null" >
+        ctc_gender,
+      </if>
+      <if test="ctcEmail != null" >
+        ctc_email,
+      </if>
+      <if test="ctcPhone != null" >
+        ctc_phone,
+      </if>
+      <if test="ctcTel != null" >
+        ctc_tel,
+      </if>
+      <if test="ctcGroup != null" >
+        ctc_group,
+      </if>
+      <if test="ctcJob != null" >
+        ctc_job,
+      </if>
+      <if test="comAddr != null" >
+        com_addr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ctcId != null" >
+        #{ctcId,jdbcType=BIGINT},
+      </if>
+      <if test="ctcName != null" >
+        #{ctcName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcGender != null" >
+        #{ctcGender,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcEmail != null" >
+        #{ctcEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcPhone != null" >
+        #{ctcPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcTel != null" >
+        #{ctcTel,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcGroup != null" >
+        #{ctcGroup,jdbcType=INTEGER},
+      </if>
+      <if test="ctcJob != null" >
+        #{ctcJob,jdbcType=VARCHAR},
+      </if>
+      <if test="comAddr != null" >
+        #{comAddr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yjb.pojo.YjbContactExample" resultType="java.lang.Integer" >
+    select count(*) from yjb_contact
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yjb_contact
+    <set >
+      <if test="record.ctcId != null" >
+        ctc_id = #{record.ctcId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ctcName != null" >
+        ctc_name = #{record.ctcName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctcGender != null" >
+        ctc_gender = #{record.ctcGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctcEmail != null" >
+        ctc_email = #{record.ctcEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctcPhone != null" >
+        ctc_phone = #{record.ctcPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctcTel != null" >
+        ctc_tel = #{record.ctcTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctcGroup != null" >
+        ctc_group = #{record.ctcGroup,jdbcType=INTEGER},
+      </if>
+      <if test="record.ctcJob != null" >
+        ctc_job = #{record.ctcJob,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comAddr != null" >
+        com_addr = #{record.comAddr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yjb_contact
+    set ctc_id = #{record.ctcId,jdbcType=BIGINT},
+      ctc_name = #{record.ctcName,jdbcType=VARCHAR},
+      ctc_gender = #{record.ctcGender,jdbcType=VARCHAR},
+      ctc_email = #{record.ctcEmail,jdbcType=VARCHAR},
+      ctc_phone = #{record.ctcPhone,jdbcType=VARCHAR},
+      ctc_tel = #{record.ctcTel,jdbcType=VARCHAR},
+      ctc_group = #{record.ctcGroup,jdbcType=INTEGER},
+      ctc_job = #{record.ctcJob,jdbcType=VARCHAR},
+      com_addr = #{record.comAddr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjb.pojo.YjbContact" >
+    update yjb_contact
+    <set >
+      <if test="ctcName != null" >
+        ctc_name = #{ctcName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcGender != null" >
+        ctc_gender = #{ctcGender,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcEmail != null" >
+        ctc_email = #{ctcEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcPhone != null" >
+        ctc_phone = #{ctcPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcTel != null" >
+        ctc_tel = #{ctcTel,jdbcType=VARCHAR},
+      </if>
+      <if test="ctcGroup != null" >
+        ctc_group = #{ctcGroup,jdbcType=INTEGER},
+      </if>
+      <if test="ctcJob != null" >
+        ctc_job = #{ctcJob,jdbcType=VARCHAR},
+      </if>
+      <if test="comAddr != null" >
+        com_addr = #{comAddr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ctc_id = #{ctcId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjb.pojo.YjbContact" >
+    update yjb_contact
+    set ctc_name = #{ctcName,jdbcType=VARCHAR},
+      ctc_gender = #{ctcGender,jdbcType=VARCHAR},
+      ctc_email = #{ctcEmail,jdbcType=VARCHAR},
+      ctc_phone = #{ctcPhone,jdbcType=VARCHAR},
+      ctc_tel = #{ctcTel,jdbcType=VARCHAR},
+      ctc_group = #{ctcGroup,jdbcType=INTEGER},
+      ctc_job = #{ctcJob,jdbcType=VARCHAR},
+      com_addr = #{comAddr,jdbcType=VARCHAR}
+    where ctc_id = #{ctcId,jdbcType=BIGINT}
+  </update>
+</mapper>

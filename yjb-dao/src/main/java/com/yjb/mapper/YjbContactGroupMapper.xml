@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yjb.mapper.YjbContactGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.yjb.pojo.YjbContactGroup" >
+    <id column="gro_id" property="groId" jdbcType="INTEGER" />
+    <result column="gro_abbr" property="groAbbr" jdbcType="VARCHAR" />
+    <result column="gro_fullname" property="groFullname" jdbcType="VARCHAR" />
+    <result column="gro_org_code" property="groOrgCode" jdbcType="VARCHAR" />
+    <result column="gro_pinyin" property="groPinyin" jdbcType="VARCHAR" />
+    <result column="gro_rep_org_code" property="groRepOrgCode" jdbcType="VARCHAR" />
+    <result column="gro_remarks" property="groRemarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gro_id, gro_abbr, gro_fullname, gro_org_code, gro_pinyin, gro_rep_org_code, gro_remarks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yjb.pojo.YjbContactGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yjb_contact_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yjb_contact_group
+    where gro_id = #{groId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yjb_contact_group
+    where gro_id = #{groId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yjb.pojo.YjbContactGroupExample" >
+    delete from yjb_contact_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yjb.pojo.YjbContactGroup" >
+    insert into yjb_contact_group (gro_id, gro_abbr, gro_fullname, 
+      gro_org_code, gro_pinyin, gro_rep_org_code, 
+      gro_remarks)
+    values (#{groId,jdbcType=INTEGER}, #{groAbbr,jdbcType=VARCHAR}, #{groFullname,jdbcType=VARCHAR}, 
+      #{groOrgCode,jdbcType=VARCHAR}, #{groPinyin,jdbcType=VARCHAR}, #{groRepOrgCode,jdbcType=VARCHAR}, 
+      #{groRemarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjb.pojo.YjbContactGroup" >
+    insert into yjb_contact_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groId != null" >
+        gro_id,
+      </if>
+      <if test="groAbbr != null" >
+        gro_abbr,
+      </if>
+      <if test="groFullname != null" >
+        gro_fullname,
+      </if>
+      <if test="groOrgCode != null" >
+        gro_org_code,
+      </if>
+      <if test="groPinyin != null" >
+        gro_pinyin,
+      </if>
+      <if test="groRepOrgCode != null" >
+        gro_rep_org_code,
+      </if>
+      <if test="groRemarks != null" >
+        gro_remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groId != null" >
+        #{groId,jdbcType=INTEGER},
+      </if>
+      <if test="groAbbr != null" >
+        #{groAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="groFullname != null" >
+        #{groFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="groOrgCode != null" >
+        #{groOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groPinyin != null" >
+        #{groPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="groRepOrgCode != null" >
+        #{groRepOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groRemarks != null" >
+        #{groRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yjb.pojo.YjbContactGroupExample" resultType="java.lang.Integer" >
+    select count(*) from yjb_contact_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yjb_contact_group
+    <set >
+      <if test="record.groId != null" >
+        gro_id = #{record.groId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groAbbr != null" >
+        gro_abbr = #{record.groAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groFullname != null" >
+        gro_fullname = #{record.groFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groOrgCode != null" >
+        gro_org_code = #{record.groOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groPinyin != null" >
+        gro_pinyin = #{record.groPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groRepOrgCode != null" >
+        gro_rep_org_code = #{record.groRepOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groRemarks != null" >
+        gro_remarks = #{record.groRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yjb_contact_group
+    set gro_id = #{record.groId,jdbcType=INTEGER},
+      gro_abbr = #{record.groAbbr,jdbcType=VARCHAR},
+      gro_fullname = #{record.groFullname,jdbcType=VARCHAR},
+      gro_org_code = #{record.groOrgCode,jdbcType=VARCHAR},
+      gro_pinyin = #{record.groPinyin,jdbcType=VARCHAR},
+      gro_rep_org_code = #{record.groRepOrgCode,jdbcType=VARCHAR},
+      gro_remarks = #{record.groRemarks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjb.pojo.YjbContactGroup" >
+    update yjb_contact_group
+    <set >
+      <if test="groAbbr != null" >
+        gro_abbr = #{groAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="groFullname != null" >
+        gro_fullname = #{groFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="groOrgCode != null" >
+        gro_org_code = #{groOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groPinyin != null" >
+        gro_pinyin = #{groPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="groRepOrgCode != null" >
+        gro_rep_org_code = #{groRepOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groRemarks != null" >
+        gro_remarks = #{groRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gro_id = #{groId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjb.pojo.YjbContactGroup" >
+    update yjb_contact_group
+    set gro_abbr = #{groAbbr,jdbcType=VARCHAR},
+      gro_fullname = #{groFullname,jdbcType=VARCHAR},
+      gro_org_code = #{groOrgCode,jdbcType=VARCHAR},
+      gro_pinyin = #{groPinyin,jdbcType=VARCHAR},
+      gro_rep_org_code = #{groRepOrgCode,jdbcType=VARCHAR},
+      gro_remarks = #{groRemarks,jdbcType=VARCHAR}
+    where gro_id = #{groId,jdbcType=INTEGER}
+  </update>
+</mapper>

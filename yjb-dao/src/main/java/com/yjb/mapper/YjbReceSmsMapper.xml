@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yjb.mapper.YjbReceSmsMapper" >
+  <resultMap id="BaseResultMap" type="com.yjb.pojo.YjbReceSms" >
+    <id column="rece_sms_id" property="receSmsId" jdbcType="VARCHAR" />
+    <result column="rece_from" property="receFrom" jdbcType="BIGINT" />
+    <result column="rece_time" property="receTime" jdbcType="TIMESTAMP" />
+    <result column="rece_status" property="receStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yjb.pojo.YjbReceSms" extends="BaseResultMap" >
+    <result column="rece_content" property="receContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rece_sms_id, rece_from, rece_time, rece_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    rece_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.yjb.pojo.YjbReceSmsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from yjb_rece_sms
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yjb.pojo.YjbReceSmsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yjb_rece_sms
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from yjb_rece_sms
+    where rece_sms_id = #{receSmsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from yjb_rece_sms
+    where rece_sms_id = #{receSmsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yjb.pojo.YjbReceSmsExample" >
+    delete from yjb_rece_sms
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yjb.pojo.YjbReceSms" >
+    insert into yjb_rece_sms (rece_sms_id, rece_from, rece_time, 
+      rece_status, rece_content)
+    values (#{receSmsId,jdbcType=VARCHAR}, #{receFrom,jdbcType=BIGINT}, #{receTime,jdbcType=TIMESTAMP}, 
+      #{receStatus,jdbcType=TINYINT}, #{receContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjb.pojo.YjbReceSms" >
+    insert into yjb_rece_sms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="receSmsId != null" >
+        rece_sms_id,
+      </if>
+      <if test="receFrom != null" >
+        rece_from,
+      </if>
+      <if test="receTime != null" >
+        rece_time,
+      </if>
+      <if test="receStatus != null" >
+        rece_status,
+      </if>
+      <if test="receContent != null" >
+        rece_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="receSmsId != null" >
+        #{receSmsId,jdbcType=VARCHAR},
+      </if>
+      <if test="receFrom != null" >
+        #{receFrom,jdbcType=BIGINT},
+      </if>
+      <if test="receTime != null" >
+        #{receTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receStatus != null" >
+        #{receStatus,jdbcType=TINYINT},
+      </if>
+      <if test="receContent != null" >
+        #{receContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yjb.pojo.YjbReceSmsExample" resultType="java.lang.Integer" >
+    select count(*) from yjb_rece_sms
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yjb_rece_sms
+    <set >
+      <if test="record.receSmsId != null" >
+        rece_sms_id = #{record.receSmsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receFrom != null" >
+        rece_from = #{record.receFrom,jdbcType=BIGINT},
+      </if>
+      <if test="record.receTime != null" >
+        rece_time = #{record.receTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receStatus != null" >
+        rece_status = #{record.receStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.receContent != null" >
+        rece_content = #{record.receContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update yjb_rece_sms
+    set rece_sms_id = #{record.receSmsId,jdbcType=VARCHAR},
+      rece_from = #{record.receFrom,jdbcType=BIGINT},
+      rece_time = #{record.receTime,jdbcType=TIMESTAMP},
+      rece_status = #{record.receStatus,jdbcType=TINYINT},
+      rece_content = #{record.receContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yjb_rece_sms
+    set rece_sms_id = #{record.receSmsId,jdbcType=VARCHAR},
+      rece_from = #{record.receFrom,jdbcType=BIGINT},
+      rece_time = #{record.receTime,jdbcType=TIMESTAMP},
+      rece_status = #{record.receStatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjb.pojo.YjbReceSms" >
+    update yjb_rece_sms
+    <set >
+      <if test="receFrom != null" >
+        rece_from = #{receFrom,jdbcType=BIGINT},
+      </if>
+      <if test="receTime != null" >
+        rece_time = #{receTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receStatus != null" >
+        rece_status = #{receStatus,jdbcType=TINYINT},
+      </if>
+      <if test="receContent != null" >
+        rece_content = #{receContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where rece_sms_id = #{receSmsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yjb.pojo.YjbReceSms" >
+    update yjb_rece_sms
+    set rece_from = #{receFrom,jdbcType=BIGINT},
+      rece_time = #{receTime,jdbcType=TIMESTAMP},
+      rece_status = #{receStatus,jdbcType=TINYINT},
+      rece_content = #{receContent,jdbcType=LONGVARCHAR}
+    where rece_sms_id = #{receSmsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjb.pojo.YjbReceSms" >
+    update yjb_rece_sms
+    set rece_from = #{receFrom,jdbcType=BIGINT},
+      rece_time = #{receTime,jdbcType=TIMESTAMP},
+      rece_status = #{receStatus,jdbcType=TINYINT}
+    where rece_sms_id = #{receSmsId,jdbcType=VARCHAR}
+  </update>
+</mapper>
