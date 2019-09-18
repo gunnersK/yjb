@@ -1,1 +1,1 @@
-1. ajax的post请求提交表单时，如果控制器接收不到参数，看看ajax属性中有没有定义contentType有就删了试试
+1. ajax的post请求提交表单时，如果控制器接收不到参数，看看ajax属性中有没有定义contentType,有就删了试试
