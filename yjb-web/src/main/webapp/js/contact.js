@@ -6,6 +6,20 @@ layui.use(['table', 'layer', "element"], function(){
     var layer = layui.layer;
     var element = layui.element;
     $ = layui.jquery;
+    
+    $.contextMenu({
+        selector: '.layui-nav-child', //右键选择器
+        callback: function(key, options) {//点击回调处理
+          var m = "clicked: " + key;
+//          window.console && console.log(m) || alert(m);
+//          alert(JSON.stringify($(this).find("span").val()))
+          alert(JSON.stringify($(this).find("a").attr("value")))
+        },
+        items: {//菜单列表配置
+          "edit": {name: "修改群组", icon: "edit"},
+          "delete": {name: "删除群组", icon: "delete"}
+        }
+      });
 
     //联系人表格
     table.render({
@@ -72,8 +86,45 @@ layui.use(['table', 'layer', "element"], function(){
             }
         });
     });
+    
+    //添加群组加号
+    $("#add-group").click(function(){
+//        clearForm();
+        var i = layer.open({
+            title: "新建群组",
+            area: ['800px', '500px'],
+            type: 1,
+            btnAlign: 'c',
+            closeBtn: 1,
+            content: $("#groupInfo"),
+            btn: ['确定', '关闭'],
+            yes: function(){
+                layer.confirm("确定添加?", function(index){
+                    $.ajax({
+                        type : "post",//方法类型
+                        async : false,
+                        dataType : "json",//预期服务器返回的数据类型
+                        url : "/contact/save",//url
+                        data :$("#addCtcForm").serialize(),
+                        processData: false,
+                        success : function(data) {
+                            if (data.status == 200) {
+                                layer.msg("添加成功");
+                            } else{
+                                layer.msg("添加失败");
+                            }
+//                            table.reload('contact-table');
+                        }
+                    });
+                    layer.close(index);
+                    layer.close(i);
+                });
+            },
+            btn2: function(){}  //return false 开启该代码可禁止点击该按钮关闭
+        });
+    });
 
-    //确认添加联系人按钮
+    //添加联系人按钮
     $("#add-btn").click(function(){
         clearForm();
         var i = layer.open({

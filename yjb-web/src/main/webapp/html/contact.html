@@ -9,13 +9,19 @@
     <title>contact</title>
     <link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css" />
     <link rel="stylesheet" href="../css/contact.css" />
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<link href="https://cdn.bootcss.com/jquery-contextmenu/2.6.3/jquery.contextMenu.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/jquery-contextmenu/2.6.3/jquery.contextMenu.min.js"></script>
 </head>
 
 <body>
         <!--左侧通讯录群组-->
         <div class="contact-group">
             <div class="layui-card">
-                <div class="layui-card-header"><i class="layui-icon layui-icon-user"></i> 群组</div>
+                <div class="layui-card-header">
+                	<i class="layui-icon layui-icon-user"></i> 群组
+                	<a id="add-group" title="添加群组"><i class="layui-icon">&#xe654;</i></a>
+                </div>
                 <div class="layui-card-body">
                     <ul class="layui-nav layui-nav-tree" lay-filter="group-nav">
                         <!--默认展开-->
@@ -23,17 +29,19 @@
                             <!--<a href="javascript:;" title="主页"><i class="layui-icon layui-icon-home"></i><cite>主页</cite></a>-->
                             <a href="javascript:;"><cite>通讯录群组</cite></a>
                             <dl class="layui-nav-child">
-                                <dd><a href="javascript:;" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市应急管理局</a></dd>
+                                <dd>
+                                	<a href="javascript:;;" value="市应急管理局" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市应急管理局</a>
+                               	</dd>
                                 <!--<dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>-->
                             </dl>
-                            <dl class="layui-nav-child">
+                            <!-- <dl class="layui-nav-child">
                                 <dd><a href="javascript:;" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市人大常委</a></dd>
-                                <!--<dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>-->
+                                <dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>
                             </dl>
                             <dl class="layui-nav-child">
                                 <dd><a href="javascript:;" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>应急专家组</a></dd>
-                                <!--<dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>-->
-                            </dl>
+                                <dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>
+                            </dl> -->
                         </li>
                     </ul>
                 </div>
@@ -124,6 +132,49 @@
                         <!--<input type="text" name="name" required lay-verify="required"  autocomplete="off" class="layui-input">-->
                     </div>
                 </div>
+            </form>
+        </div>
+        
+        <!--新增群组窗口 默认隐藏-->
+        <div class="group-info" id="groupInfo">
+            <form class="layui-form column-content-detail" id="addGroupForm">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">简称：</label>
+                    <div class="layui-input-block input-text" >
+                        <input type="text" id="groAbbr" name="groAbbr" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">全称：</label>
+                    <div class="layui-input-block input-text" >
+                        <input id="groFullname" type="text" name="groFullname" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">机构代码：</label>
+                    <div class="layui-input-block input-text">
+                        <input id="groOrgCode" type="text" name="groOrgCode" required lay-verify="required"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">拼音码：</label>
+                    <div class="layui-input-block input-text">
+                        <input id="groPinyin" type="text" name="groPinyin" required lay-verify="required"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label style="float:left; margin-top:7px; width:100px">上报机构编码：</label>
+                    <div class="layui-input-block input-text">
+                        <input id="groRepOrgCode" type="text" name="groRepOrgCode" required lay-verify="required"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">注释：</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea input-text" name="groRemarks" lay-verify="content" id="groRemarks"></textarea>
+                    </div>
+                </div>
+              </div>
             </form>
         </div>
 

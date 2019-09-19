@@ -53,6 +53,13 @@
     left: 50px;
     display: none;
 }
+.group-info{
+    padding: 20px 50px 0 50px;
+    width: 600px;
+    position: relative;
+    left: 50px;
+    display: none;
+}
 .input-text{
     width:400px;
 }
