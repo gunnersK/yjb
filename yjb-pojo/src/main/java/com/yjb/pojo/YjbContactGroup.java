@@ -15,7 +15,15 @@ public class YjbContactGroup {
 
     private String groRemarks;
 
-    public Integer getGroId() {
+    
+    @Override
+	public String toString() {
+		return "YjbContactGroup [groId=" + groId + ", groAbbr=" + groAbbr + ", groFullname=" + groFullname
+				+ ", groOrgCode=" + groOrgCode + ", groPinyin=" + groPinyin + ", groRepOrgCode=" + groRepOrgCode
+				+ ", groRemarks=" + groRemarks + "]";
+	}
+
+	public Integer getGroId() {
         return groId;
     }
 

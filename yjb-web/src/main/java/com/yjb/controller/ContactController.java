@@ -17,12 +17,14 @@ public class ContactController {
 	@Autowired
 	private ContactService contactService;
 	
+	//查询所有联系人
 	@RequestMapping("/contact/list")
 	@ResponseBody
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs){
 		return contactService.getContactsList(yjbContactArgs);
 	}
 	
+	//新增联系人
 	@RequestMapping("/contact/save")
 	@ResponseBody
 	public YJBResult addContact(YjbContact yjbContact){

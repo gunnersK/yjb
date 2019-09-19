@@ -25,23 +25,19 @@
                 <div class="layui-card-body">
                     <ul class="layui-nav layui-nav-tree" lay-filter="group-nav">
                         <!--默认展开-->
-                        <li class="layui-nav-item layui-nav-itemed">
+                        <li class="layui-nav-item layui-nav-itemed" id="group-list">
                             <!--<a href="javascript:;" title="主页"><i class="layui-icon layui-icon-home"></i><cite>主页</cite></a>-->
                             <a href="javascript:;"><cite>通讯录群组</cite></a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                	<a href="javascript:;;" value="市应急管理局" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市应急管理局</a>
-                               	</dd>
-                                <!--<dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>-->
-                            </dl>
+                            <dl class="layui-nav-child"></dl>
+                            <!-- <dl class="layui-nav-child">
+                                <dd><a href="javascript:;;" value="市应急管理局" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市应急管理局</a></dd>
+                                <dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>
+                            </dl> -->
                             <!-- <dl class="layui-nav-child">
                                 <dd><a href="javascript:;" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市人大常委</a></dd>
                                 <dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>
-                            </dl>
-                            <dl class="layui-nav-child">
-                                <dd><a href="javascript:;" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>应急专家组</a></dd>
-                                <dd><a href="javascript:;" lay-href="./view/Jcksh.html">金程可视化</a></dd>
                             </dl> -->
+                            
                         </li>
                     </ul>
                 </div>
@@ -113,9 +109,9 @@
                     <label class="layui-form-label">所属群组：</label>
                     <div class="layui-input-block input-text">
                         <select id="ctcGroup" name="ctcGroup" lay-verify="required">
-                            <option value="1"></option>
+                            <!-- <option value="1"></option>
                             <option value="1">1</option>
-                            <option value="2">2</option>
+                            <option value="2">2</option> -->
                         </select>
                     </div>
                 </div>
@@ -138,6 +134,7 @@
         <!--新增群组窗口 默认隐藏-->
         <div class="group-info" id="groupInfo">
             <form class="layui-form column-content-detail" id="addGroupForm">
+            	<input id="groId" type="hidden" name="groId">
                 <div class="layui-form-item">
                     <label class="layui-form-label">简称：</label>
                     <div class="layui-input-block input-text" >

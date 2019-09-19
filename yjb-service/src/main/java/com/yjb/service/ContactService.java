@@ -10,7 +10,7 @@ public interface ContactService {
 	//查询所有联系人
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs);
 	
-	//查询所有联系人
+	//新增联系人
 	public YJBResult addConatct(YjbContact yjbContact); 
 
 }

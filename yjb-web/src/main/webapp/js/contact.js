@@ -6,20 +6,6 @@ layui.use(['table', 'layer', "element"], function(){
     var layer = layui.layer;
     var element = layui.element;
     $ = layui.jquery;
-    
-    $.contextMenu({
-        selector: '.layui-nav-child', //右键选择器
-        callback: function(key, options) {//点击回调处理
-          var m = "clicked: " + key;
-//          window.console && console.log(m) || alert(m);
-//          alert(JSON.stringify($(this).find("span").val()))
-          alert(JSON.stringify($(this).find("a").attr("value")))
-        },
-        items: {//菜单列表配置
-          "edit": {name: "修改群组", icon: "edit"},
-          "delete": {name: "删除群组", icon: "delete"}
-        }
-      });
 
     //联系人表格
     table.render({
@@ -61,7 +47,7 @@ layui.use(['table', 'layer', "element"], function(){
                 btn: ['确定', '关闭'],
                 yes: function(){
                     layer.confirm("确定修改?", function(index){
-                        comfirmModify();
+                    	modifyContact();
                         layer.close(index);
                         layer.close(i);
                     });
@@ -89,7 +75,7 @@ layui.use(['table', 'layer', "element"], function(){
     
     //添加群组加号
     $("#add-group").click(function(){
-//        clearForm();
+    	clearGroForm();
         var i = layer.open({
             title: "新建群组",
             area: ['800px', '500px'],
@@ -99,34 +85,81 @@ layui.use(['table', 'layer', "element"], function(){
             content: $("#groupInfo"),
             btn: ['确定', '关闭'],
             yes: function(){
-                layer.confirm("确定添加?", function(index){
-                    $.ajax({
-                        type : "post",//方法类型
-                        async : false,
-                        dataType : "json",//预期服务器返回的数据类型
-                        url : "/contact/save",//url
-                        data :$("#addCtcForm").serialize(),
-                        processData: false,
-                        success : function(data) {
-                            if (data.status == 200) {
-                                layer.msg("添加成功");
-                            } else{
-                                layer.msg("添加失败");
-                            }
-//                            table.reload('contact-table');
-                        }
-                    });
-                    layer.close(index);
-                    layer.close(i);
-                });
+            	if($("#groAbbr").val() != "" && $("#groAbbr").val() != null){
+            		layer.confirm("确定添加?", function(index){
+            			$.ajax({
+            				type : "post",//方法类型
+            				async : false,
+            				dataType : "json",//预期服务器返回的数据类型
+            				url : "/group/save",//url
+            				data :$("#addGroupForm").serialize(),
+            				processData: false,
+            				success : function(data) {
+            					if (data.status == 200) {
+            						layer.msg("添加成功");
+            					} else{
+            						layer.msg("添加失败");
+            					}
+            					refreshGroupList();
+            				}
+            			});
+            			layer.close(index);
+            			layer.close(i);
+            		});
+            	} else{
+            		layer.msg("请输入群组简称");
+            	}
             },
             btn2: function(){}  //return false 开启该代码可禁止点击该按钮关闭
         });
     });
+    
+    //群组列表右键菜单
+    $.contextMenu({
+        selector: '.layui-nav-child', //右键选择器
+        callback: function(key, options) {//点击回调处理
+          var m = "clicked: " + key;
+//          window.console && console.log(m) || alert(m);
+          var groId = $(this).find("a").attr("value");
+          if(key == "edit"){
+        	  getGroupInfo(groId);
+        	  var i = layer.open({
+                  title: "修改群组",
+                  area: ['800px', '500px'],
+                  type: 1,
+                  btnAlign: 'c',
+                  closeBtn: 1,
+                  content: $("#groupInfo"),
+                  btn: ['确定', '关闭'],
+                  yes: function(){
+                  	if($("#groAbbr").val() != "" && $("#groAbbr").val() != null){
+                  		layer.confirm("确定修改?", function(index){
+                  			modifyGroup();
+                  			layer.close(index);
+                  			layer.close(i);
+                  		});
+                  	} else{
+                  		layer.msg("请输入群组简称");
+                  	}
+                  },
+                  btn2: function(){}  //return false 开启该代码可禁止点击该按钮关闭
+              });
+          } else{
+        	  layer.confirm("确定删除该群组?", function(index){
+    			delGroup(groId);
+    			layer.close(index);
+        	  });
+          }
+        },
+        items: {//菜单列表配置
+          "edit": {name: "修改群组", icon: "edit"},
+          "delete": {name: "删除群组", icon: "delete"}
+        }
+      });
 
     //添加联系人按钮
     $("#add-btn").click(function(){
-        clearForm();
+        clearCtcForm();
         var i = layer.open({
             title: "新建联系人",
             area: ['800px', '500px'],
@@ -192,11 +225,100 @@ layui.use(['table', 'layer', "element"], function(){
         });
     });
     loadSerialize();
+    initWidget();
 });
 
 //初始化控件
 function initWidget(){
-	//初始化性别
+	//初始化群组
+	refreshGroupList();
+}
+
+
+//刷新群组列表
+function refreshGroupList(){
+	$.ajax({
+        type : "POST",//方法类型
+        async : false,
+        dataType : "json",//预期服务器返回的数据类型
+        url : "/group/list",//url
+        processData: false,
+        success : function(data) {
+        	//拿到所有群组并删除
+        	var dl = $("#group-list").find("dl");
+        	$(dl).remove();
+        	
+        	//将查询到的群组重新添加进列表里
+        	for(var i = 0; i < data.length; i++){
+        		$("#group-list").append('<dl class="layui-nav-child"><dd><a href="javascript:;" value="'+data[i].groId+'" ><span class="l-line"></span>'+data[i].groAbbr+'</a></dl>');
+        	}
+        }
+    });
+}
+
+//通过groId获取群组信息并填入表单
+function getGroupInfo(groId){
+	$.ajax({
+		type : "post",//方法类型
+		async : false,
+		dataType : "json",//预期服务器返回的数据类型
+		url : "/group/getGroupById",//url
+		data : {"groId":groId},
+		processData: true,
+		success : function(data) {
+			fillGroForm(data);
+		}
+	});
+}
+
+//把群组信息填入表单
+function fillGroForm(data){
+	$("#groId").val(data.groId);
+	$("#groAbbr").val(data.groAbbr);
+	$("#groFullname").val(data.groFullname);
+	$("#groOrgCode").val(data.groOrgCode);
+	$("#groPinyin").val(data.groPinyin);
+	$("#groRepOrgCode").val(data.groRepOrgCode);
+	$("#groRemarks").val(data.groRemarks);
+}
+
+//修改群组
+function modifyGroup(){
+	$.ajax({
+		type : "post",//方法类型
+		async : false,
+		dataType : "json",//预期服务器返回的数据类型
+		url : "/group/modify",//url
+		data :$("#addGroupForm").serialize(),
+		processData: false,
+		success : function(data) {
+			if (data.status == 200) {
+				layer.msg("修改成功");
+			} else{
+				layer.msg("修改失败");
+			}
+			refreshGroupList();
+		}
+	});
+}
+
+//删除群组
+function delGroup(id){
+	$.ajax({
+		type : "POST",//方法类型
+		async : false,
+		dataType : "json",//预期服务器返回的数据类型
+		url : "/group/delete",//url
+		data : {"groId":id},
+		success : function(data) {
+			if (data.status == 200) {
+				layer.msg("删除成功");
+			} else{
+				layer.msg("删除失败");
+			}
+		}
+	});
+	refreshGroupList();
 }
 
 //删除联系人
@@ -230,19 +352,29 @@ function checkForm(){
 
 }
 
-//清空表单
-function clearForm(){
-    $("#ctcName").val('');
-    $("#ctcEmail").val('');
-    $("#ctcPhone").val('');
-    $("#ctcTel").val('');
-    $("#ctcGroup").val('');
-    $("#ctcJob").val('');
-    $("#comAddr").val('');
+//清空群组表单
+function clearGroForm(){
+    $("#groAbbr").val('');
+    $("#groFullname").val('');
+    $("#groOrgCode").val('');
+    $("#groPinyin").val('');
+    $("#groRepOrgCode").val('');
+    $("#groRemarks").val('');
+}
+
+//清空联系人表单
+function clearCtcForm(){
+	$("#ctcName").val('');
+	$("#ctcEmail").val('');
+	$("#ctcPhone").val('');
+	$("#ctcTel").val('');
+	$("#ctcGroup").val('');
+	$("#ctcJob").val('');
+	$("#comAddr").val('');
 }
 
 //确认修改联系人信息
-function comfirmModify(){
+function modifyContact(){
     $.ajax({
         type : "POST",//方法类型
         async : false,

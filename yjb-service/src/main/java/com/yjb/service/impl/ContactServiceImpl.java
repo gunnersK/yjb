@@ -22,6 +22,7 @@ public class ContactServiceImpl implements ContactService{
 	@Autowired
 	private YjbContactMapper yjbContactMapper;
 
+	//查询所有联系人
 	@Override
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs) {
 		//设置分页信息
@@ -45,6 +46,7 @@ public class ContactServiceImpl implements ContactService{
 		return result;
 	}
 
+	//新增联系人
 	@Override
 	public YJBResult addConatct(YjbContact yjbContact) {
 		yjbContactMapper.insert(yjbContact);
