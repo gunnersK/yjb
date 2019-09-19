@@ -1,10 +1,14 @@
 /**
  * Created by Administrator on 2019/9/10.
  */
-layui.use(['table', 'layer', "element"], function(){
+$(function(){
+	var form;
+});
+layui.use(['table', 'layer', "element", "form"], function(){
     var table = layui.table;
     var layer = layui.layer;
     var element = layui.element;
+    form = layui.form;
     $ = layui.jquery;
 
     //联系人表格
@@ -61,10 +65,11 @@ layui.use(['table', 'layer', "element"], function(){
             });
         }
     });
-
+    
     //左侧通讯录群组监听
     element.on('nav(group-nav)', function(elem){
-        var data = $(this).attr('');
+        var data = $(this).attr('value');
+        layer.msg(data);
         table.reload('contact-table', {
             where: {
                 //设定表格重载(查询)参数
@@ -225,15 +230,14 @@ layui.use(['table', 'layer', "element"], function(){
         });
     });
     loadSerialize();
-    initWidget();
+    initWidget(form);
 });
 
 //初始化控件
-function initWidget(){
+function initWidget(form){
 	//初始化群组
 	refreshGroupList();
 }
-
 
 //刷新群组列表
 function refreshGroupList(){
@@ -244,13 +248,20 @@ function refreshGroupList(){
         url : "/group/list",//url
         processData: false,
         success : function(data) {
-        	//拿到所有群组并删除
-        	var dl = $("#group-list").find("dl");
+        	//清空左侧群组导航列表
+        	var dl = $("#groupList").find("dl");
         	$(dl).remove();
         	
-        	//将查询到的群组重新添加进列表里
+        	//清空新建联系人的群组下拉列表
+        	var opt = $("#ctcGroup").find("option");
+        	$(opt).remove();
+        	$("#ctcGroup").append('<option></option>');
+        	
+        	//将查询到的群组重新添加进左侧群组导航列表和新建联系人的群组下拉列表里
         	for(var i = 0; i < data.length; i++){
-        		$("#group-list").append('<dl class="layui-nav-child"><dd><a href="javascript:;" value="'+data[i].groId+'" ><span class="l-line"></span>'+data[i].groAbbr+'</a></dl>');
+        		$("#groupList").append('<dl class="layui-nav-child"><dd><a href="javascript:;" value="'+data[i].groId+'" ><span class="l-line"></span>'+data[i].groAbbr+'</a></dl>');
+        		$("#ctcGroup").append('<option value="'+data[i].groId+'">'+data[i].groAbbr+'</option>');
+        		form.render();
         	}
         }
     });
@@ -339,6 +350,7 @@ function delContacts(ids){
             }
         }
     });
+    refreshGroupList();
 }
 
 //将联系人信息填入表单
