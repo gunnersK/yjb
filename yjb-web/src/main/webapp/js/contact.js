@@ -37,39 +37,6 @@ layui.use(['table', 'layer', "element", "form"], function(){
         ]]
     });
 
-    //联系人表格的工具条按钮监听
-    table.on('tool(contact-table)', function(obj){
-        var row = obj.data;
-        var btn = obj.event;
-        if(btn == 'detail'){
-            layer.msg('detail');
-        } else if(btn == 'modify'){
-            fillForm(row);
-            var i = layer.open({
-                title: "修改联系人信息",
-                area: ['800px', '500px'],
-                type: 1,
-                btnAlign: 'c',
-                closeBtn: 1,
-                content: $("#contactInfo"),
-                btn: ['确定', '关闭'],
-                yes: function(){
-                    layer.confirm("确定修改?", function(index){
-                    	modifyContact();
-                        layer.close(index);
-                        layer.close(i);
-                    });
-                }
-            });
-        } else if(btn == 'delete'){
-            var id = row.id;	
-            layer.confirm('确定删除该联系人？', function(index){
-                delContacts(id);
-                layer.close(index);
-            });
-        }
-    });
-    
     //左侧通讯录群组监听
     element.on('nav(group-nav)', function(elem){
         var ctcGroup = $(this).attr('value');
@@ -77,7 +44,6 @@ layui.use(['table', 'layer', "element", "form"], function(){
             where: {
                 //设定表格重载(查询)参数
             	ctcGroup:ctcGroup
-//            	ctcName:$("#searchName").attr('value')
             }
         });
     });
@@ -167,6 +133,39 @@ layui.use(['table', 'layer', "element", "form"], function(){
         }
       });
 
+    //联系人表格的工具条按钮监听
+    table.on('tool(contact-table)', function(obj){
+        var row = obj.data;
+        var btn = obj.event;
+        if(btn == 'detail'){
+            layer.msg('detail');
+        } else if(btn == 'modify'){
+            fillForm(row);
+            var i = layer.open({
+                title: "修改联系人信息",
+                area: ['800px', '500px'],
+                type: 1,
+                btnAlign: 'c',
+                closeBtn: 1,
+                content: $("#contactInfo"),
+                btn: ['确定', '关闭'],
+                yes: function(){
+                    layer.confirm("确定修改?", function(index){
+                    	modifyContact();
+                        layer.close(index);
+                        layer.close(i);
+                    });
+                }
+            });
+        } else if(btn == 'delete'){
+            var id = row.id;	
+            layer.confirm('确定删除该联系人？', function(index){
+                delContacts(id);
+                layer.close(index);
+            });
+        }
+    });
+
     //添加联系人按钮
     $("#add-btn").click(function(){
         clearCtcForm();
@@ -229,18 +228,16 @@ layui.use(['table', 'layer', "element", "form"], function(){
     $("#search-btn").click(function(){
         table.reload('contact-table', {
             where: {
-                //设定表格重载(查询)参数
-                'data': data
+            	ctcName:$("#searchName").val()
             }
         });
     });
     loadSerialize();
-    initWidget(form);
+    initWidget();
 });
 
 //初始化控件
-function initWidget(form){
-	//初始化群组
+function initWidget(){
 	refreshGroupList();
 }
 
@@ -371,8 +368,16 @@ function delContacts(ids){
 
 //将联系人信息填入表单
 function fillForm(row){
-    $("#contactName").val(row.name);
-    //$("#gender").val(row.gender);
+	$("#ctcName").val(row.name);
+	$("#ctcPhone").val(row.ctcPhone);
+	$("#ctcTel").val(row.ctcTel);
+	$("#ctcJob").val(row.ctcJob);
+	$("#comAddr").val(row.comAddr);
+	if(row.ctcGender == 1){
+		$("#ctcGender").eq(1).attr('checked',true);
+	} else{
+		$("#ctcGender").eq(0).attr('checked',true);
+	}
 }
 
 //检查表单信息完整性
