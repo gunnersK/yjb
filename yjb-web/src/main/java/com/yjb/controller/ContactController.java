@@ -3,6 +3,7 @@ package com.yjb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yjb.pojo.LayUITableResult;
@@ -18,9 +19,10 @@ public class ContactController {
 	private ContactService contactService;
 	
 	//查询所有联系人
-	@RequestMapping("/contact/list")
+	@RequestMapping(value="/contact/list",method=RequestMethod.POST)
 	@ResponseBody
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs){
+		System.out.println(yjbContactArgs.getCtcGroup());
 		return contactService.getContactsList(yjbContactArgs);
 	}
 	

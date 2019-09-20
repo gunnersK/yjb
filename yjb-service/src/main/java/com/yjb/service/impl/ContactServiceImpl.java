@@ -22,15 +22,26 @@ public class ContactServiceImpl implements ContactService{
 	@Autowired
 	private YjbContactMapper yjbContactMapper;
 
-	//查询所有联系人
+	//查询联系人
 	@Override
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs) {
+	    String ctcName = yjbContactArgs.getCtcName();
+	    Integer ctcGroup = yjbContactArgs.getCtcGroup();
+	    
 		//设置分页信息
 		PageHelper.startPage(yjbContactArgs.getPage(), yjbContactArgs.getLimit());
 		
 		//从数据库查询
 		YjbContactExample example = new YjbContactExample();
 		Criteria criteria = example.createCriteria();
+		
+		//判断是否有群组或姓名的查询条件
+		if(ctcName != null){
+			criteria.andCtcNameEqualTo(ctcName);
+		}
+		if(ctcGroup != null){
+			criteria.andCtcGroupEqualTo(ctcGroup);
+		}
 		List<YjbContact> list = yjbContactMapper.selectByExample(example);
 		
 		//取分页信息

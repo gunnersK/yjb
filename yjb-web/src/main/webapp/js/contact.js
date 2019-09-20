@@ -3,11 +3,14 @@
  */
 $(function(){
 	var form;
+	var element;
 });
+
+//加载模块
 layui.use(['table', 'layer', "element", "form"], function(){
     var table = layui.table;
     var layer = layui.layer;
-    var element = layui.element;
+    element = layui.element;
     form = layui.form;
     $ = layui.jquery;
 
@@ -21,6 +24,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
         limit: 10,
         text: {none: "找不到联系人"},
         url: '/contact/list',
+        method:'post',
         cols: [[
             {field: 'ctcId', title: 'ID', checkbox: true, align: 'center'},
             {field: 'ctcName', title: '姓名', align: 'center', width:140},
@@ -68,12 +72,12 @@ layui.use(['table', 'layer', "element", "form"], function(){
     
     //左侧通讯录群组监听
     element.on('nav(group-nav)', function(elem){
-        var data = $(this).attr('value');
-        layer.msg(data);
+        var ctcGroup = $(this).attr('value');
         table.reload('contact-table', {
             where: {
                 //设定表格重载(查询)参数
-                'data': data
+            	ctcGroup:ctcGroup
+//            	ctcName:$("#searchName").attr('value')
             }
         });
     });
@@ -127,6 +131,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
 //          window.console && console.log(m) || alert(m);
           var groId = $(this).find("a").attr("value");
           if(key == "edit"){
+        	  clearGroForm();
         	  getGroupInfo(groId);
         	  var i = layer.open({
                   title: "修改群组",
@@ -261,8 +266,9 @@ function refreshGroupList(){
         	for(var i = 0; i < data.length; i++){
         		$("#groupList").append('<dl class="layui-nav-child"><dd><a href="javascript:;" value="'+data[i].groId+'" ><span class="l-line"></span>'+data[i].groAbbr+'</a></dl>');
         		$("#ctcGroup").append('<option value="'+data[i].groId+'">'+data[i].groAbbr+'</option>');
-        		form.render();
         	}
+        	form.render();
+        	element.init();
         }
     });
 }
@@ -280,6 +286,16 @@ function getGroupInfo(groId){
 			fillGroForm(data);
 		}
 	});
+}
+
+//清空群组信息表单
+function clearGroForm(){
+    $("#groAbbr").val('');
+    $("#groFullname").val('');
+    $("#groOrgCode").val('');
+    $("#groPinyin").val('');
+    $("#groRepOrgCode").val('');
+    $("#groRemarks").val('');
 }
 
 //把群组信息填入表单
@@ -362,16 +378,6 @@ function fillForm(row){
 //检查表单信息完整性
 function checkForm(){
 
-}
-
-//清空群组表单
-function clearGroForm(){
-    $("#groAbbr").val('');
-    $("#groFullname").val('');
-    $("#groOrgCode").val('');
-    $("#groPinyin").val('');
-    $("#groRepOrgCode").val('');
-    $("#groRemarks").val('');
 }
 
 //清空联系人表单

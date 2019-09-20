@@ -27,7 +27,7 @@
                         <!--默认展开-->
                         <li class="layui-nav-item layui-nav-itemed" id="groupList">
                             <!--<a href="javascript:;" title="主页"><i class="layui-icon layui-icon-home"></i><cite>主页</cite></a>-->
-                            <a href="javascript:;"><cite>通讯录群组</cite></a>
+                            <a href="javascript:;" value=""><cite>通讯录群组</cite>
                             <dl class="layui-nav-child"></dl>
                             <!-- <dl class="layui-nav-child">
                                 <dd><a href="javascript:;;" value="市应急管理局" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市应急管理局</a></dd>
@@ -54,7 +54,7 @@
             </div>
             <div class="layui-form layui-inline search-form" >
                 <div class="layui-inline">
-                    <input type="text" name="title" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    <input type="text" id="searchName" name="searchName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
                 </div>
                 <div id="search-btn" class="layui-inline tool-btn">
                     <button class="layui-btn layui-btn-warm " data-url="new_contact.html"><i class="layui-icon">&#xe615;</i></button>
@@ -63,7 +63,7 @@
 
             <!--联系人表格-->
             <div class="" >
-                    <table id="contact-table" lay-filter="contact-table"></table>
+                    <table id="contact-table" lay-filter="contact-table" lay-data="{method:'post'}"></table>
             </div>
         </div>
 
