@@ -47,4 +47,5 @@
             ...
          }
          ```
-6. layui数据表格默认请求method为get，可以定义method属性为'post'   --详见layui官网文档，数据表格--异步数据接口部分
+6. layui数据表格默认请求method为get，可以定义method属性为'post'   
+   --详见layui官网文档，数据表格--异步数据接口部分
