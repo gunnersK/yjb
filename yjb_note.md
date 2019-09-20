@@ -25,13 +25,26 @@
       详见layui官网文档表单的更新渲染部分+
 4. layui导航栏动态加载数据之后要element.init()
 5. layui数据表格重载参数传值问题
-   
-   where后面的{}里面直接写json格式参数，左边的key不用加引号
-   ```
+   1. where后面的{}里面直接写json格式参数，左边的key不用加引号
+      ```
       table.reload('contact-table', {
             where: {
                 //设定表格重载(查询)参数
-            	ctcGroup:$(this).attr('value')
+             ctcGroup:$(this).attr('value')
             }
-        });
-   ```
+      });
+      ```
+   2. 参数传递中文乱码
+      1. 在html对应<table>中定义lay-data="{method:'post'}"
+         ```
+         <table id="contact-table" lay-filter="contact-table" lay-data="{method:'post'}"></table>
+         ```
+      2. 在对应controller的@RequestMapping加入METHOD定义
+         ```
+         @RequestMapping(value="/contact/list",method=RequestMethod.POST)
+         @ResponseBody
+         public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs){
+            ...
+         }
+         ```
+6. layui数据表格默认请求method为get，可以定义method属性为'post'   --详见layui官网文档，数据表格--异步数据接口部分
