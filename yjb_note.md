@@ -22,4 +22,16 @@
       ```
          form.render('select');//表示刷新select选择框渲染
       ```
-      详见layui官网文档表单的更新渲染部分
+      详见layui官网文档表单的更新渲染部分+
+4. layui导航栏动态加载数据之后要element.init()
+5. layui数据表格重载参数传值问题
+   
+   where后面的{}里面直接写json格式参数，左边的key不用加引号
+   ```
+      table.reload('contact-table', {
+            where: {
+                //设定表格重载(查询)参数
+            	ctcGroup:$(this).attr('value')
+            }
+        });
+   ```
