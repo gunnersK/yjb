@@ -3,12 +3,13 @@
  */
 $(function(){
 	var form;
+	var table;
 	var element;
 });
 
 //加载模块
 layui.use(['table', 'layer', "element", "form"], function(){
-    var table = layui.table;
+    table = layui.table;
     var layer = layui.layer;
     element = layui.element;
     form = layui.form;
@@ -158,9 +159,11 @@ layui.use(['table', 'layer', "element", "form"], function(){
                 }
             });
         } else if(btn == 'delete'){
-            var id = row.id;	
+            var id = row.ctcId;	
             layer.confirm('确定删除该联系人？', function(index){
-                delContacts(id);
+            	var ids = [];
+            	ids.push(id);
+                delContacts(ids);
                 layer.close(index);
             });
         }
@@ -212,7 +215,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
         var rows = checkedRows.data;
         var ids = [];
         for(var i = 0; i < rows.length; i++){
-            ids.push(rows[i].id);
+            ids.push(rows[i].ctcId);
         }
         if(checkedRows.data.length == 0){
             layer.msg('请选中要删除的联系人');
@@ -347,17 +350,19 @@ function delGroup(id){
 
 //删除联系人
 function delContacts(ids){
+	var delIds = ids.join(',');
     $.ajax({
         type : "POST",//方法类型
         async : false,
         dataType : "json",//预期服务器返回的数据类型
-        url : "",//url
-        data : ids,
-        contentType: false,
-        processData: false,
+        url : "/contact/delete",//url
+        data : {"ids":delIds},
+//        contentType: false,
+//        processData: false,
         success : function(data) {
             if (data.status == 200) {
                 layer.msg("删除成功");
+                table.reload('contact-table');
             } else{
                 layer.msg("删除失败");
             }
@@ -391,7 +396,7 @@ function clearCtcForm(){
 	$("#ctcEmail").val('');
 	$("#ctcPhone").val('');
 	$("#ctcTel").val('');
-	$("#ctcGroup").val('');
+	refreshGroupList();
 	$("#ctcJob").val('');
 	$("#comAddr").val('');
 }

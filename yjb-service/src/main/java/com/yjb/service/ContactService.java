@@ -11,6 +11,9 @@ public interface ContactService {
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs);
 	
 	//新增联系人
-	public YJBResult addConatct(YjbContact yjbContact); 
+	public YJBResult addContact(YjbContact yjbContact); 
+	
+	//删除联系人
+	public YJBResult deleteContact(Long[] ids);
 
 }

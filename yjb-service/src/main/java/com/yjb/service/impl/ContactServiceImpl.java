@@ -59,8 +59,17 @@ public class ContactServiceImpl implements ContactService{
 
 	//新增联系人
 	@Override
-	public YJBResult addConatct(YjbContact yjbContact) {
+	public YJBResult addContact(YjbContact yjbContact) {
 		yjbContactMapper.insert(yjbContact);
+		return YJBResult.ok();
+	}
+
+	//删除联系人
+	@Override
+	public YJBResult deleteContact(Long[] ids) {
+		for(long id : ids){
+			yjbContactMapper.deleteByPrimaryKey(id);
+		}
 		return YJBResult.ok();
 	}
 }

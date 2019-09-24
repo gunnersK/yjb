@@ -1,5 +1,7 @@
 package com.yjb.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,15 @@ public class ContactController {
 	@RequestMapping("/contact/save")
 	@ResponseBody
 	public YJBResult addContact(YjbContact yjbContact){
-		return contactService.addConatct(yjbContact);
+		return contactService.addContact(yjbContact);
 	}
+	
+	//删除联系人
+	@RequestMapping("/contact/delete")
+	@ResponseBody
+	public YJBResult deleteContact(Long[] ids){
+		return contactService.deleteContact(ids);
+	}
+	
 
 }
