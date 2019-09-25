@@ -23,7 +23,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
         width: 1090,
         height: 500,
         page:true,
-        limit: 10,
+        limit: 20,
         text: {none: "找不到联系人"},
         url: '/contact/list',
         method:'post',
