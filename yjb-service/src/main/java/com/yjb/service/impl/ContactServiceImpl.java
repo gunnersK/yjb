@@ -36,8 +36,8 @@ public class ContactServiceImpl implements ContactService{
 		Criteria criteria = example.createCriteria();
 		
 		//判断是否有群组或姓名的查询条件
-		if(ctcName != null){
-			criteria.andCtcNameEqualTo(ctcName);
+		if(ctcName != null && ctcName != ""){
+			criteria.andCtcNameLike(ctcName);
 		}
 		if(ctcGroup != null){
 			criteria.andCtcGroupEqualTo(ctcGroup);

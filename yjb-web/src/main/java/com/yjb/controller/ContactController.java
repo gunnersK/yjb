@@ -24,7 +24,6 @@ public class ContactController {
 	@RequestMapping(value="/contact/list",method=RequestMethod.POST)
 	@ResponseBody
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs){
-		System.out.println(yjbContactArgs.getCtcGroup());
 		return contactService.getContactsList(yjbContactArgs);
 	}
 	

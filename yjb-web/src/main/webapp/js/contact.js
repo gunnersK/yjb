@@ -4,6 +4,7 @@
 $(function(){
 	var form;
 	var table;
+	var ctcTable;
 	var element;
 });
 
@@ -16,7 +17,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
     $ = layui.jquery;
 
     //联系人表格
-    table.render({
+    ctcTable = table.render({
         elem: '#contact-table',
         id: 'contact-table',
         width: 1090,
@@ -29,7 +30,15 @@ layui.use(['table', 'layer', "element", "form"], function(){
         cols: [[
             {field: 'ctcId', title: 'ID', checkbox: true, align: 'center'},
             {field: 'ctcName', title: '姓名', align: 'center', width:140},
-            {field: 'ctcGender', title: '性别', align: 'center', width:80},
+            {field: 'ctcGender', title: '性别', align: 'center', width:80,
+            	templet: function(d) {
+            		if(d.ctcGender == 0){
+            			return "男"
+            		} else{
+            			return "女"
+            		}
+            	}
+            },
             {field: 'ctcPhone', title: '手机号码', align: 'center', width:140},
             {field: 'ctcTel', title: '固定电话', align: 'center', width:140},
             {field: 'ctcJob', title: '职务', align: 'center', width:140},
@@ -41,12 +50,13 @@ layui.use(['table', 'layer', "element", "form"], function(){
     //左侧通讯录群组监听
     element.on('nav(group-nav)', function(elem){
         var ctcGroup = $(this).attr('value');
-        table.reload('contact-table', {
+        ctcTable.reload({
             where: {
                 //设定表格重载(查询)参数
-//            	page:1,
-//            	limit:10,	
             	ctcGroup:ctcGroup
+            },
+            page: {
+            	curr: 1
             }
         });
     });
@@ -205,7 +215,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
                             } else{
                                 layer.msg("添加失败");
                             }
-                            table.reload('contact-table');
+                            ctcTable.reload({page: {curr: 1}});
                         }
                     });
                     layer.close(index);
@@ -239,10 +249,13 @@ layui.use(['table', 'layer', "element", "form"], function(){
 
     //查找联系人按钮
     $("#search-btn").click(function(){
-        table.reload('contact-table', {
-            where: {
-            	ctcName:$("#searchName").val()
-            }
+    	var ctcName = "";
+    	if($("#searchName").val() != null || $("#searchName").val() != ""){
+    		ctcName = $("#searchName").val();
+    	}
+        ctcTable.reload({
+            where: {ctcName:ctcName},
+            page: {curr: 1}
         });
     });
     loadSerialize();
@@ -409,7 +422,7 @@ function modifyContact(){
           } else{
               layer.msg("修改失败");
           }
-          table.reload('contact-table');
+          ctcTable.reload();
       }
   });
 }
@@ -428,7 +441,7 @@ function delContacts(ids){
         success : function(data) {
             if (data.status == 200) {
                 layer.msg("删除成功");
-                table.reload('contact-table');
+                ctcTable.reload();
             } else{
                 layer.msg("删除失败");
             }
