@@ -16,4 +16,7 @@ public interface ContactService {
 	//删除联系人
 	public YJBResult deleteContact(Long[] ids);
 
+	//修改联系人
+	public YJBResult modifyContact(YjbContact yjbContact);
+
 }

@@ -44,6 +44,8 @@ layui.use(['table', 'layer', "element", "form"], function(){
         table.reload('contact-table', {
             where: {
                 //设定表格重载(查询)参数
+//            	page:1,
+//            	limit:10,	
             	ctcGroup:ctcGroup
             }
         });
@@ -98,7 +100,6 @@ layui.use(['table', 'layer', "element", "form"], function(){
 //          window.console && console.log(m) || alert(m);
           var groId = $(this).find("a").attr("value");
           if(key == "edit"){
-        	  clearGroForm();
         	  getGroupInfo(groId);
         	  var i = layer.open({
                   title: "修改群组",
@@ -139,7 +140,16 @@ layui.use(['table', 'layer', "element", "form"], function(){
         var row = obj.data;
         var btn = obj.event;
         if(btn == 'detail'){
-            layer.msg('detail');
+        	fillForm(row);
+        	var i = layer.open({
+                title: "查看联系人信息",
+                area: ['800px', '500px'],
+                type: 1,
+                btnAlign: 'c',
+                closeBtn: 1,
+                content: $("#contactInfo"),
+                btn: ['关闭']
+            });
         } else if(btn == 'modify'){
             fillForm(row);
             var i = layer.open({
@@ -242,6 +252,7 @@ layui.use(['table', 'layer', "element", "form"], function(){
 //初始化控件
 function initWidget(){
 	refreshGroupList();
+	$(".context-menu-item").removeClass("context-menu-icon-edit context-menu-icon-delete");
 }
 
 //刷新群组列表
@@ -300,6 +311,7 @@ function clearGroForm(){
 
 //把群组信息填入表单
 function fillGroForm(data){
+	clearGroForm();
 	$("#groId").val(data.groId);
 	$("#groAbbr").val(data.groAbbr);
 	$("#groFullname").val(data.groFullname);
@@ -348,6 +360,60 @@ function delGroup(id){
 	refreshGroupList();
 }
 
+//清空联系人表单
+function clearCtcForm(){
+	$("#ctcId").val('');
+	$("#ctcName").val('');
+	$("#ctcEmail").val('');
+	$("#ctcPhone").val('');
+	$("#ctcTel").val('');
+	refreshGroupList();
+	$("#ctcJob").val('');
+	$("#comAddr").val('');
+	$(".ctcGender").eq(0).prop("checked",true);
+	form.render();
+}
+
+//将联系人信息填入表单
+function fillForm(row){
+	clearCtcForm();
+	$("#ctcId").val(row.ctcId);
+	$("#ctcName").val(row.ctcName);
+	$("#ctcEmail").val(row.ctcEmail);
+	$("#ctcPhone").val(row.ctcPhone);
+	$("#ctcTel").val(row.ctcTel);
+	$("#ctcGroup").val(row.ctcGroup);
+	$("#ctcJob").val(row.ctcJob);
+	$("#comAddr").val(row.comAddr);
+	if(row.ctcGender == 1){
+		$(".ctcGender").eq(1).prop("checked",true);
+	} else{
+		$(".ctcGender").eq(0).prop("checked",true);
+	}
+	form.render();
+}
+
+//修改联系人信息
+function modifyContact(){
+  $.ajax({
+      type : "POST",//方法类型
+      async : false,
+      dataType : "json",//预期服务器返回的数据类型
+      url : "/contact/modify",//url
+      data :$("#addCtcForm").serialize(),
+//      contentType: false,
+//      processData: false,
+      success : function(data) {
+          if (data.status == 200) {
+              layer.msg("修改成功");
+          } else{
+              layer.msg("修改失败");
+          }
+          table.reload('contact-table');
+      }
+  });
+}
+
 //删除联系人
 function delContacts(ids){
 	var delIds = ids.join(',');
@@ -369,56 +435,6 @@ function delContacts(ids){
         }
     });
     refreshGroupList();
-}
-
-//将联系人信息填入表单
-function fillForm(row){
-	$("#ctcName").val(row.name);
-	$("#ctcPhone").val(row.ctcPhone);
-	$("#ctcTel").val(row.ctcTel);
-	$("#ctcJob").val(row.ctcJob);
-	$("#comAddr").val(row.comAddr);
-	if(row.ctcGender == 1){
-		$("#ctcGender").eq(1).attr('checked',true);
-	} else{
-		$("#ctcGender").eq(0).attr('checked',true);
-	}
-}
-
-//检查表单信息完整性
-function checkForm(){
-
-}
-
-//清空联系人表单
-function clearCtcForm(){
-	$("#ctcName").val('');
-	$("#ctcEmail").val('');
-	$("#ctcPhone").val('');
-	$("#ctcTel").val('');
-	refreshGroupList();
-	$("#ctcJob").val('');
-	$("#comAddr").val('');
-}
-
-//确认修改联系人信息
-function modifyContact(){
-    $.ajax({
-        type : "POST",//方法类型
-        async : false,
-        dataType : "json",//预期服务器返回的数据类型
-        url : "",//url
-        data :"",
-        contentType: false,
-        processData: false,
-        success : function(data) {
-            if (data.status == 200) {
-                layer.msg("修改成功");
-            } else{
-                layer.msg("修改失败");
-            }
-        }
-    });
 }
 
 function loadSerialize(){

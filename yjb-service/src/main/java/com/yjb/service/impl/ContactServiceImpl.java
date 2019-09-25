@@ -72,4 +72,11 @@ public class ContactServiceImpl implements ContactService{
 		}
 		return YJBResult.ok();
 	}
+
+	//修改联系人
+	@Override
+	public YJBResult modifyContact(YjbContact yjbContact) {
+		yjbContactMapper.updateByPrimaryKeySelective(yjbContact);
+		return YJBResult.ok();
+	}
 }

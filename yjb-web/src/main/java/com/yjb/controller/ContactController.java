@@ -41,6 +41,13 @@ public class ContactController {
 	public YJBResult deleteContact(Long[] ids){
 		return contactService.deleteContact(ids);
 	}
+
+	@RequestMapping("/contact/modify")
+	@ResponseBody
+	//修改联系人
+	public YJBResult modifyContact(YjbContact yjbContact){
+		return contactService.modifyContact(yjbContact);
+	}
 	
 
 }
