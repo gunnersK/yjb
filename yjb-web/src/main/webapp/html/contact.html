@@ -9,7 +9,6 @@
     <title>contact</title>
     <link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css" />
     <link rel="stylesheet" href="../css/contact.css" />
-	<!-- <link href="https://cdn.bootcss.com/jquery-contextmenu/2.6.3/jquery.contextMenu.min.css" rel="stylesheet"> -->
 	<link href="../css/jquery.contextMenu.min.css" rel="stylesheet">
     
 </head>
@@ -27,7 +26,7 @@
                         <!--默认展开-->
                         <li class="layui-nav-item layui-nav-itemed" id="groupList">
                             <!--<a href="javascript:;" title="主页"><i class="layui-icon layui-icon-home"></i><cite>主页</cite></a>-->
-                            <a href="javascript:;" value=""><cite>通讯录群组</cite>
+                            <a value=""><cite>通讯录群组</cite>
                             <dl class="layui-nav-child"></dl>
                             <!-- <dl class="layui-nav-child">
                                 <dd><a href="javascript:;;" value="市应急管理局" lay-href="./view/Jcbaobiao.html"><span class="l-line"></span>市应急管理局</a></dd>
@@ -46,23 +45,24 @@
 
         <div class="page-content-wrap">
             <!--顶部工具栏-->
-            <div class="layui-inline tool-btn">
-                <button id="add-btn" class="add-btn layui-btn layui-btn-small layui-btn-normal hidden-xs" data-url="new_contact.html"><i class="layui-icon">&#xe654;</i></button>
-            </div>
-            <div class="layui-inline tool-btn">
-                <button id="multi-del-btn" class="multi-del-btn layui-btn layui-btn-small layui-btn-normal layui-btn-danger hidden-xs" data-url="new_contact.html"><i class="layui-icon">&#xe640;</i></button>
-            </div>
-            <div class="layui-form layui-inline search-form" >
-                <div class="layui-inline">
-                    <input type="text" id="searchName" name="searchName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-                </div>
-                <div id="search-btn" class="layui-inline tool-btn">
-                    <button class="layui-btn layui-btn-warm " data-url="new_contact.html"><i class="layui-icon">&#xe615;</i></button>
-                </div>
-            </div>
-
+            <div class="top-tool">
+	            <div class="layui-inline tool-btn">
+	                <button id="add-btn" class="add-btn layui-btn layui-btn-small layui-btn-normal hidden-xs" data-url="new_contact.html"><i class="layui-icon">&#xe654;</i></button>
+	            </div>
+	            <div class="layui-inline tool-btn">
+	                <button id="multi-del-btn" class="multi-del-btn layui-btn layui-btn-small layui-btn-normal layui-btn-danger hidden-xs" data-url="new_contact.html"><i class="layui-icon">&#xe640;</i></button>
+	            </div>
+	            <div class="layui-form layui-inline search-form" >
+	                <div class="layui-inline">
+	                    <input type="text" id="searchName" name="searchName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+	                </div>
+	                <div id="search-btn" class="layui-inline tool-btn">
+	                    <button class="layui-btn layui-btn-warm " data-url="new_contact.html"><i class="layui-icon">&#xe615;</i></button>
+	                </div>
+	            </div>
+			</div>
             <!--联系人表格-->
-            <div class="" >
+            <div class="contact-table" >
                     <table id="contact-table" lay-filter="contact-table" lay-data="{method:'post'}"></table>
             </div>
         </div>

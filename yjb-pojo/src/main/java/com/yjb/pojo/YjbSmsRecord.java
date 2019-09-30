@@ -13,6 +13,8 @@ public class YjbSmsRecord {
 
     private Byte smsStatus;
 
+    private String smsContent;
+
     public Long getRecordId() {
         return recordId;
     }
@@ -51,5 +53,13 @@ public class YjbSmsRecord {
 
     public void setSmsStatus(Byte smsStatus) {
         this.smsStatus = smsStatus;
+    }
+
+    public String getSmsContent() {
+        return smsContent;
+    }
+
+    public void setSmsContent(String smsContent) {
+        this.smsContent = smsContent == null ? null : smsContent.trim();
     }
 }

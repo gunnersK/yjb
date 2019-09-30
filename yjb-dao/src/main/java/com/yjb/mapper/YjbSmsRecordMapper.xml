@@ -7,6 +7,7 @@
     <result column="sms_ctc" property="smsCtc" jdbcType="BIGINT" />
     <result column="sms_time" property="smsTime" jdbcType="TIMESTAMP" />
     <result column="sms_status" property="smsStatus" jdbcType="TINYINT" />
+    <result column="sms_content" property="smsContent" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    record_id, sms_id, sms_ctc, sms_time, sms_status
+    record_id, sms_id, sms_ctc, sms_time, sms_status, sms_content
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yjb.pojo.YjbSmsRecordExample" >
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.yjb.pojo.YjbSmsRecord" >
     insert into yjb_sms_record (record_id, sms_id, sms_ctc, 
-      sms_time, sms_status)
+      sms_time, sms_status, sms_content
+      )
     values (#{recordId,jdbcType=BIGINT}, #{smsId,jdbcType=VARCHAR}, #{smsCtc,jdbcType=BIGINT}, 
-      #{smsTime,jdbcType=TIMESTAMP}, #{smsStatus,jdbcType=TINYINT})
+      #{smsTime,jdbcType=TIMESTAMP}, #{smsStatus,jdbcType=TINYINT}, #{smsContent,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yjb.pojo.YjbSmsRecord" >
     insert into yjb_sms_record
@@ -123,6 +126,9 @@
       <if test="smsStatus != null" >
         sms_status,
       </if>
+      <if test="smsContent != null" >
+        sms_content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordId != null" >
@@ -139,6 +145,9 @@
       </if>
       <if test="smsStatus != null" >
         #{smsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="smsContent != null" >
+        #{smsContent,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.smsStatus != null" >
         sms_status = #{record.smsStatus,jdbcType=TINYINT},
       </if>
+      <if test="record.smsContent != null" >
+        sms_content = #{record.smsContent,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       sms_id = #{record.smsId,jdbcType=VARCHAR},
       sms_ctc = #{record.smsCtc,jdbcType=BIGINT},
       sms_time = #{record.smsTime,jdbcType=TIMESTAMP},
-      sms_status = #{record.smsStatus,jdbcType=TINYINT}
+      sms_status = #{record.smsStatus,jdbcType=TINYINT},
+      sms_content = #{record.smsContent,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="smsStatus != null" >
         sms_status = #{smsStatus,jdbcType=TINYINT},
       </if>
+      <if test="smsContent != null" >
+        sms_content = #{smsContent,jdbcType=VARCHAR},
+      </if>
     </set>
     where record_id = #{recordId,jdbcType=BIGINT}
   </update>
@@ -205,7 +221,8 @@
     set sms_id = #{smsId,jdbcType=VARCHAR},
       sms_ctc = #{smsCtc,jdbcType=BIGINT},
       sms_time = #{smsTime,jdbcType=TIMESTAMP},
-      sms_status = #{smsStatus,jdbcType=TINYINT}
+      sms_status = #{smsStatus,jdbcType=TINYINT},
+      sms_content = #{smsContent,jdbcType=VARCHAR}
     where record_id = #{recordId,jdbcType=BIGINT}
   </update>
 </mapper>

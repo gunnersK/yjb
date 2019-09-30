@@ -33,4 +33,8 @@ public interface YjbSendSmsMapper {
     int updateByPrimaryKeyWithBLOBs(YjbSendSms record);
 
     int updateByPrimaryKey(YjbSendSms record);
+    
+    //获取上一个插入的id
+    int getSelectLastId();
+    
 }

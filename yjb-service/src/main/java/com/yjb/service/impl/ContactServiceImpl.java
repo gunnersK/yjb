@@ -27,6 +27,7 @@ public class ContactServiceImpl implements ContactService{
 	public LayUITableResult getContactsList(YjbContactArgs yjbContactArgs) {
 	    String ctcName = yjbContactArgs.getCtcName();
 	    Integer ctcGroup = yjbContactArgs.getCtcGroup();
+	    String ctcPhone = yjbContactArgs.getCtcPhone();
 	    
 		//设置分页信息
 		PageHelper.startPage(yjbContactArgs.getPage(), yjbContactArgs.getLimit());
@@ -35,12 +36,15 @@ public class ContactServiceImpl implements ContactService{
 		YjbContactExample example = new YjbContactExample();
 		Criteria criteria = example.createCriteria();
 		
-		//判断是否有群组或姓名的查询条件
+		//判断是否有群组或姓名或手机号的查询条件
 		if(ctcName != null && ctcName != ""){
-			criteria.andCtcNameLike(ctcName);
+			criteria.andCtcNameLike("%"+ctcName+"%");
 		}
 		if(ctcGroup != null){
 			criteria.andCtcGroupEqualTo(ctcGroup);
+		}
+		if(ctcPhone != null){
+			criteria.andCtcPhoneLike(ctcPhone+"%");
 		}
 		List<YjbContact> list = yjbContactMapper.selectByExample(example);
 		

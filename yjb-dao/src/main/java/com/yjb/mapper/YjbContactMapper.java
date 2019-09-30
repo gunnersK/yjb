@@ -27,4 +27,6 @@ public interface YjbContactMapper {
     int updateByPrimaryKeySelective(YjbContact record);
 
     int updateByPrimaryKey(YjbContact record);
+    
+    Integer selectCtcId(Long tel);
 }

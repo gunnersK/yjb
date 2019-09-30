@@ -288,7 +288,7 @@ function refreshGroupList(){
         	
         	//将查询到的群组重新添加进左侧群组导航列表和新建联系人的群组下拉列表里
         	for(var i = 0; i < data.length; i++){
-        		$("#groupList").append('<dl class="layui-nav-child"><dd><a href="javascript:;" value="'+data[i].groId+'" ><span class="l-line"></span>'+data[i].groAbbr+'</a></dl>');
+        		$("#groupList").append('<dl class="layui-nav-child"><dd><a value="'+data[i].groId+'" ><span class="l-line"></span>'+data[i].groAbbr+'</a></dl>');
         		$("#ctcGroup").append('<option value="'+data[i].groId+'">'+data[i].groAbbr+'</option>');
         	}
         	form.render();

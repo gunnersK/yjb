@@ -273,4 +273,15 @@
       com_addr = #{comAddr,jdbcType=VARCHAR}
     where ctc_id = #{ctcId,jdbcType=BIGINT}
   </update>
+  
+  <!-- 根据电话查询id -->
+    <select id="selectCtcId" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+   			
+			SELECT  
+			       ctc_id
+		      FROM yjb_contact 
+			 WHERE ctc_phone = #{ctcPhone,jdbcType=VARCHAR}
+  	</select>
+  
+  
 </mapper>

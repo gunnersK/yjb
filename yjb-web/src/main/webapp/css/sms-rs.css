@@ -1,23 +1,81 @@
 .top-tool{
-    width: 1315px;
-    height: 50px;
-    /*border: solid 1px;*/
+    width: 1317px;
+    height: 40px;
 }
 .sms-rec-div{
-    width: 1315px;
     height: 800px;
-    /*border: solid 1px;*/
+    position: relative;
+    top: -15px;
 }
 .search-form, .search-form-item{
     display: inline-block;
 }
 .search-form{
-    position: relative;
-    left: 280px;
+   /*  position: relative;
+    left: 280px; */
+    float:right;
 }
 .rs-checkbox{
     bottom: 5px;
 }
 .layui-table, .layui-table-view{
     margin: 0;
+}
+.send-sms-win{
+	display: none;
+}
+.top-filter{
+	width: 800px;
+	margin: 3px 0 3px 0;
+}
+.contact-table , .send-contact{
+	float:left;
+}
+.contact-table{
+	position: relative;
+	left: 23px;
+}
+.send-contact{
+	width: 330px;
+	height: 380px;	
+	position: relative;
+	left: 50px;
+	overflow: auto;
+}
+.ctc-label{
+	height: 24px;
+	width: auto;
+	float: left;
+	cursor:default;
+	font-size: 13px;
+	padding: 6px 0 0 10px;
+	margin: 0 8px 16px 0;	
+	border-radius: 15px;
+	background-color: rgb(242,242,242);
+}
+.ctc-label:hover{
+	color: black;
+}
+.clear-ctc{
+	font-size: 12px;
+	color: gray;
+	text-decoration: none;
+	cursor:pointer;
+	position: relative;
+	left: 100px;
+}
+
+.del-icon{
+	cursor:pointer;
+	font-size: 7px;
+	margin: 0 5px 0 5px; 
+}
+.sendArea{
+	float:left;
+	margin: 20px 0 0 20px;
+}
+.layui-textarea{
+	width: 800px;
+	height:150px;	
+	margin-bottom: 5px;
 }

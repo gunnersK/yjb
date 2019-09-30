@@ -248,4 +248,10 @@
       send_status = #{sendStatus,jdbcType=TINYINT}
     where send_sms_id = #{sendSmsId,jdbcType=VARCHAR}
   </update>
+  
+  <!--获取上一个插入的id-->
+  <select id="getSelectLastId" resultType="java.lang.Integer"  >
+   			SELECT LAST_INSERT_ID()
+  </select>
+  
 </mapper>

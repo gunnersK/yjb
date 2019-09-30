@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yjb.mapper.YjbSmsSendRecRecordMapper" >
+<resultMap id="BaseResultMap" type="com.yjb.pojo.YjbSmsRecordCtcInfo" >
+    <id column="record_id" property="recordId" jdbcType="BIGINT" />
+    <result column="sms_id" property="smsId" jdbcType="VARCHAR" />
+    <result column="sms_ctc" property="smsCtc" jdbcType="BIGINT" />
+    <result column="ctc_name" property="ctcName" jdbcType="VARCHAR" />
+    <result column="ctc_phone" property="ctcPhone" jdbcType="VARCHAR" />
+    <result column="ctc_tel" property="ctcTel" jdbcType="VARCHAR" />
+    <result column="sms_time" property="smsTime" jdbcType="TIMESTAMP" />
+    <result column="sms_status" property="smsStatus" jdbcType="TINYINT" />
+    <result column="sms_content" property="smsContent" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="query_yjbSmsSendRecRecord_where">
+		 <if test="yjbSmsRecordInfoArgs!=null"> 
+			<if
+				test="yjbSmsRecordInfoArgs.ctcName!=null and yjbSmsRecordInfoArgs.ctcName!=''">
+				and yjb_contact.ctc_name =
+				'${yjbSmsRecordInfoArgs.ctcName}'
+			</if>
+			
+			<if
+				test="yjbSmsRecordInfoArgs.startDate!=null and yjbSmsRecordInfoArgs.startDate!='' and yjbSmsRecordInfoArgs.endDate!=null and yjbSmsRecordInfoArgs.endDate!=''">
+				and yjb_sms_record.sms_time between
+				'${yjbSmsRecordInfoArgs.startDate}' and
+				'${yjbSmsRecordInfoArgs.endDate}'
+			</if>						
+			
+		</if>  
+ </sql>
+  
+  
+   <select id="selectRecord" resultMap="BaseResultMap" parameterType="com.yjb.pojo.YjbSmsRecordInfoArgs">
+  
+	  	SELECT 
+				yjb_sms_record.record_id,
+				yjb_sms_record.sms_time,
+				yjb_contact.ctc_name,
+				yjb_contact.ctc_phone,
+				yjb_sms_record.sms_ctc,
+				yjb_sms_record.sms_content,
+				yjb_sms_record.sms_status
+		FROM  
+			yjb_sms_record  
+			LEFT JOIN yjb_contact on yjb_sms_record.sms_ctc = yjb_contact.ctc_id	
+		<where>
+			<include refid="query_yjbSmsSendRecRecord_where"></include>
+		</where>
+  </select>
+  
+</mapper>  

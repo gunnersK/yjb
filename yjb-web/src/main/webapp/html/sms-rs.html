@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="/js/layui/css/layui.css" />
     <link rel="stylesheet" href="../css/sms-rs.css" />
 </head>
 <body>
@@ -11,11 +11,11 @@
     <div class="page-content-wrap">
         <!--顶部工具栏-->
         <div class="top-tool">
-            <button id="send-btn" class="add-btn layui-btn layui-btn-small layui-btn-normal hidden-xs" data-url="new_contact.html">发短信</button>
+          	<a><button id="send-btn" class="add-btn layui-btn layui-btn-small layui-btn-normal hidden-xs" data-url="new_contact.html">发短信</button></a> 
             <button id="del-btn" class="add-btn layui-btn layui-btn-small layui-btn-normal layui-btn-danger hidden-xs" data-url="new_contact.html">删除</button>
 
             <!--收发短信记录查询表单-->
-            <form class="layui-form search-form" action="">
+            <form class="layui-form search-form" id="search-form" action="">
                 <div class="layui-form-item search-form-item">
                     <div class="layui-inline rs-checkbox" lay-filter="test1">
                         <input type="checkbox" name="like[write]" title="接收短信" lay-skin="primary" checked>
@@ -24,29 +24,86 @@
                 </div>
                 <div class="layui-form-item search-form-item">
                     <div class="layui-inline">
-                        <input type="text" id="contactName" name="name" placeholder="请输入关键字查询" class="layui-input">
+                        <input type="text" id="contactName" name=tel placeholder="请输入姓名" class="layui-input">
                     </div>
                     <div class="layui-inline">
-                        <input type="text" id="date-start" name="name" placeholder="起始日期" class="layui-input">
+                        <input type="text" id="date-start" name="startDate" placeholder="起始日期" class="layui-input">
                     </div>
                     <div class="layui-inline">
-                        <input type="text" id="date-end" name="name" placeholder="结束日期" class="layui-input">
+                        <input type="text" id="date-end" name="endDate" placeholder="结束日期" class="layui-input">
                     </div>
-                    <div id="search-btn" class="layui-inline">
-                        <button class="layui-btn layui-btn-warm " data-url="new_contact.html"><i class="layui-icon">&#xe615;</i></button>
+                    <div class="layui-inline">
+                        <button id="search-btn" type="button" class="layui-btn layui-btn-warm"><i class="layui-icon">&#xe615;</i></button>
                     </div>
                 </div>
             </form>
 
         </div>
-
+		<div style="height:20px"></div>
         <!--短信收发记录表格-->
         <div class="sms-rec-div" >
             <table id="sms-rec-table" lay-filter="contact-table"></table>
         </div>
 
     </div>
+    
+    <!-- 发送短信窗口，默认隐藏 -->
+    <div class="page-content-wrap" id="send-sms-win">
+    	<form class="layui-form" id="sendForm" action="">
+			<div class="top-filter">
+				<div class="layui-inline">
+					<label class="layui-form-label">选择群组</label>
+				 	<div class="layui-inline" style="width:150px;">
+	                    <select id="groList" name="groList" lay-filter="groList">
+	                     	<option value="">全部</option>
+	                        <!-- <option value="1"></option>
+	                        <option value="1">1</option>
+	                        <option value="2">2</option> -->
+	                    </select>
+	                </div>
+					<div class="layui-inline" style="width:150px;">
+						<input type="text" id="ctcPhone" name="ctcPhone" placeholder="输入手机号码查询" autocomplete="off" class="layui-input">							 	
+					</div>
+				    <div class="layui-inline">
+				    	<input type="button" id="addBtn" class="layui-btn layui-btn-sm layui-btn-normal" value="添加">
+				    </div> 
+				</div>	
+				<div class="layui-inline" style="margin-left: 100px">
+					<div class="layui-inline">
+						已选联系人
+					</div>
+					<div class="layui-inline">
+						<a id="clearCtc" class="clear-ctc"><i class="oper-i layui-icon">&#xe640;</i>清空</a>
+					</div>
+				</div>
+			</div>
+			
+			<!--联系人表格-->
+		    <div class="contact-table" >
+	            <table id="contact-table" lay-filter="contact-table" lay-data="{method:'post'}"></table>
+		    </div>
+		    
+		    <!--已选联系人-->
+		    <div class="send-contact" >
+	            <!-- <table id="send-contact" lay-filter="send-contact" lay-data="{method:'post'}"></table> -->
+		    	<!-- <div class="ctc-label">张敬轩<i class="del-icon layui-icon">&#x1006;</i></div> -->
+		    </div>	
+		    
+			<div class="sendArea">
+				 <div class="">
+				 	<textarea placeholder="短信内容" name="sendContent" id="sendContent" class="layui-textarea"></textarea>
+				 </div>
+				 <div class="">
+				 	<button type="button" class="layui-btn" id="sendBtn" style="float:right;">发送</button>
+				 </div>
+			</div>
+		</form>
+	</div>
 
+	<script type="text/html" id="barAdd">
+            <div class="barAdd" lay-event="add"><i class="oper-i layui-icon">&#xe654;</i></div>
+    </script>
+	<script src="../js/jquery.min.js"></script>
     <script src="../js/layui/layui.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/sms-rs.js" type="text/javascript" charset="utf-8"></script>
 </body>
