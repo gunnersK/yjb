@@ -35,7 +35,7 @@
       });
       ```
    2. 参数传递中文乱码
-      1. 在html对应<table>中定义lay-data="{method:'post'}"
+      1. 在html对应<\table>中定义lay-data="{method:'post'}"
          ```
          <table id="contact-table" lay-filter="contact-table" lay-data="{method:'post'}"></table>
          ```
