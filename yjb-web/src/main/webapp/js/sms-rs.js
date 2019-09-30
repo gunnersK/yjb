@@ -53,7 +53,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'element'], function(){
     	clearAll();
         i = layer.open({
             title: "发送短信",
-            area: ['850px', '530px'],
+            area: ['850px', '540px'],
             type: 1,
             btnAlign: 'c',
             closeBtn: 1,
@@ -113,7 +113,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'element'], function(){
         elem: '#contact-table',
         id: 'contact-table',
         width: 440,
-        height: 380,
+        height: 300,
         skin: 'line',
         limit: 100000000,
         text: {none: "找不到联系人"},
@@ -207,6 +207,7 @@ layui.use(['table', 'layer', 'form', 'laydate', 'element'], function(){
     });
     loadSerialize();
     refreshGroupList();
+    resizeCtcTable();
 });
 
 //删除短信
@@ -226,6 +227,12 @@ function delRecords(ids){
             }
         }
     });
+}
+
+function resizeCtcTable(){
+	$(".contact-table").find(".layui-table-cell").each(function(){
+		$(this).css({"height":"10px","line-height":"10px"});
+	});
 }
 
 //刷新群组下拉列表
